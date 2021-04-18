@@ -1,7 +1,8 @@
 import React from "react";
-import { Route, Switch, Link } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Header from "./Header";
-import Decks from "./Decks";
+import Home from "./Home";
+import DeckCreate from "./DeckCreate";
 import NotFound from "./NotFound";
 
 function Layout() {
@@ -12,15 +13,10 @@ function Layout() {
         {/* TODO: Implement the screen starting here */}
         <Switch>
           <Route exact={true} path="/">
-            <Link
-              to="/decks/new"
-              className="btn btn-secondary"
-              style={{ marginBottom: "10px" }}
-            >
-              <i className="oi oi-plus" style={{ paddingRight: "5px" }}></i>
-              Create Deck
-            </Link>
-            <Decks />
+            <Home />
+          </Route>
+          <Route path={"/decks/new"}>
+            <DeckCreate />
           </Route>
           <Route>
             <NotFound />

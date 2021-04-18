@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { listDecks } from "../utils/api/index";
+import { listDecks, deleteDeck } from "../utils/api/index";
 
 function Decks() {
   const [decks, setDecks] = useState([]);
@@ -23,6 +23,30 @@ function Decks() {
     loadDecks();
     return () => abortController.abort();
   }, []);
+
+  const handleDelete = async ({ target }) => {
+    const value = target.value;
+    const result = window.confirm(
+      `Delete deck ID ${value}? You will not be able to recover it.`
+    );
+
+    if (result) {
+      async function deleteData() {
+        try {
+          await deleteDeck(value);
+          const response = await listDecks();
+          setDecks(response);
+        } catch (error) {
+          if (error.name === "AbortError") {
+            console.log("deleteData Aborted");
+          } else {
+            throw error;
+          }
+        }
+      }
+      deleteData();
+    }
+  };
 
   if (decks.length > 0) {
     return (
@@ -70,8 +94,7 @@ function Decks() {
                     <button
                       className="btn btn-danger"
                       value={deck.id}
-                      // TODO handleDelete
-                      // onClick={handleDelete}
+                      onClick={handleDelete}
                     >
                       Delete
                     </button>
