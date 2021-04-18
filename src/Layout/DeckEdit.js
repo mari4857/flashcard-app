@@ -1,18 +1,37 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams, useHistory } from "react-router-dom";
 import DeckForm from "./DeckForm";
-import { createDeck } from "../utils/api/index";
+import { readDeck, updateDeck } from "../utils/api/index";
 
-function DeckCreate() {
+function DeckEdit() {
   const initialFormState = {
     name: "",
     description: "",
   };
-  const [formData, setFormData] = useState({ ...initialFormState });
+  const [deck, setDeck] = useState({ ...initialFormState });
+  const params = useParams();
+  const deckId = params.deckId;
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const response = await readDeck(deckId);
+        setDeck(response);
+      } catch (error) {
+        if (error.name === "AbortError") {
+          console.log("Aborted");
+        } else {
+          throw error;
+        }
+      }
+    }
+    loadData();
+  }, [deckId]);
+
   const handleChange = ({ target }) => {
     const value = target.value;
-    setFormData({
-      ...formData,
+    setDeck({
+      ...deck,
       [target.name]: value,
     });
   };
@@ -21,11 +40,11 @@ function DeckCreate() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Submitted:", formData);
+    //console.log("Submitted:", deck);
     async function updateData() {
       try {
-        const output = await createDeck(formData);
-        history.push(`/decks/${output.id}`);
+        await updateDeck(deck);
+        history.push(`/decks/${deckId}`);
       } catch (error) {
         if (error.name === "AbortError") {
           console.log("Aborted");
@@ -47,23 +66,25 @@ function DeckCreate() {
               Home
             </Link>
           </li>
+          <li className="breadcrumb-item">
+            <Link to={`/decks/${deckId}`}>Deck Name</Link>
+          </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Create Deck
+            Edit Deck
           </li>
         </ol>
       </nav>
-      <br />
-      <h2>Create Deck</h2>
+      <h2>Edit Deck</h2>
       <form onSubmit={handleSubmit}>
-        <DeckForm formData={formData} handleChange={handleChange} />
+        <DeckForm formData={deck} handleChange={handleChange} />
         <Link
-          to="/"
+          to={`/decks/${deckId}`}
           className="btn btn-secondary"
           style={{ marginRight: "10px" }}
         >
           Cancel
         </Link>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" value="submit" className="btn btn-primary">
           Submit
         </button>
       </form>
@@ -71,4 +92,4 @@ function DeckCreate() {
   );
 }
 
-export default DeckCreate;
+export default DeckEdit;
