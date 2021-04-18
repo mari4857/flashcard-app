@@ -21,7 +21,7 @@ function DeckCreate() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Submitted:", formData);
+    // console.log("Submitted:", formData);
     async function updateData() {
       try {
         const output = await createDeck(formData);

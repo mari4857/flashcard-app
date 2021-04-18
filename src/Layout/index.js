@@ -3,9 +3,12 @@ import { Route, Switch } from "react-router-dom";
 import Header from "./Header";
 import Home from "./Home";
 import DeckCreate from "./DeckCreate";
-import Deck from "./Deck";
-import NotFound from "./NotFound";
+import Study from "./Study";
 import DeckEdit from "./DeckEdit";
+import CardEdit from "./CardEdit";
+import Deck from "./Deck";
+import CardCreate from "./CardCreate";
+import NotFound from "./NotFound";
 
 function Layout() {
   return (
@@ -20,8 +23,17 @@ function Layout() {
           <Route path={"/decks/new"}>
             <DeckCreate />
           </Route>
+          <Route path={"/decks/:deckId/study"}>
+            <Study />
+          </Route>
           <Route path={"/decks/:deckId/edit"}>
             <DeckEdit />
+          </Route>
+          <Route path={"/decks/:deckId/cards/:cardId/edit"}>
+            <CardEdit />
+          </Route>
+          <Route path={"/decks/:deckId/cards/new"}>
+            <CardCreate />
           </Route>
           <Route path={"/decks/:deckId"}>
             <Deck />

@@ -101,51 +101,61 @@ function Deck() {
         <div className="row justify-content-between">
           <div className="col-8">
             <Link to={`/decks/${deckId}/edit`} className="btn btn-secondary">
+              <i className="oi oi-pencil" style={{ paddingRight: "5px" }}></i>
               Edit
             </Link>{" "}
             &nbsp;
             <Link to={`/decks/${deckId}/study`} className="btn btn-primary">
+              <i className="oi oi-book" style={{ paddingRight: "5px" }}></i>
               Study
             </Link>{" "}
             &nbsp;
             <Link to={`/decks/${deckId}/cards/new`} className="btn btn-primary">
+              <i className="oi oi-plus" style={{ paddingRight: "5px" }}></i>
               Add Cards
             </Link>
           </div>
           <div className="col-2">
             <button onClick={handleDeckDelete} className="btn btn-danger">
+              <i className="oi oi-trash" style={{ paddingRight: "5px" }}></i>
               Delete
             </button>
           </div>
         </div>
         <br />
-        <heading>
-          <h2>Cards</h2>
-        </heading>
+        <h2>Cards</h2>
         <br />
         {cards.map((card) => (
           <div key={card.id} className="card">
             <div className="card-body">
               <div className="container">
-                <div className="row justify-content-start">
+                <div className="row justify-content-start mb-3">
                   <div className="col-6">{card.front}</div>
                   <div className="col-6">{card.back}</div>
                 </div>
                 <div className="row">
                   <div className="col-9"></div>
-                  <div className="col-3">
+                  <div className="col-3 text-right">
                     <Link
                       to={`/decks/${deckId}/cards/${card.id}/edit`}
                       className="btn btn-secondary"
+                      style={{ marginRight: "10px" }}
                     >
+                      <i
+                        className="oi oi-pencil"
+                        style={{ paddingRight: "5px" }}
+                      ></i>
                       Edit
-                    </Link>{" "}
-                    &nbsp;
+                    </Link>
                     <button
                       onClick={handleCardDelete}
                       value={card.id}
                       className="btn btn-danger"
                     >
+                      <i
+                        className="oi oi-trash"
+                        style={{ paddingRight: "5px" }}
+                      ></i>
                       Delete
                     </button>
                   </div>
@@ -181,23 +191,33 @@ function Deck() {
           <p>{deck.description}</p>
           <div className="row justify-content-between">
             <div className="col-8">
-              <Link to={`/decks/${deckId}/edit`} className="btn btn-secondary">
+              <Link
+                to={`/decks/${deckId}/edit`}
+                className="btn btn-secondary"
+                style={{ marginRight: "10px" }}
+              >
+                <i className="oi oi-pencil" style={{ paddingRight: "5px" }}></i>
                 Edit
-              </Link>{" "}
-              &nbsp;
-              <Link to={`/decks/${deckId}/study`} className="btn btn-primary">
+              </Link>
+              <Link
+                to={`/decks/${deckId}/study`}
+                className="btn btn-primary"
+                style={{ marginRight: "10px" }}
+              >
+                <i className="oi oi-book" style={{ paddingRight: "5px" }}></i>
                 Study
-              </Link>{" "}
-              &nbsp;
+              </Link>
               <Link
                 to={`/decks/${deckId}/cards/new`}
                 className="btn btn-primary"
               >
+                <i className="oi oi-plus" style={{ paddingRight: "5px" }}></i>
                 Add Cards
               </Link>
             </div>
             <div className="col-2">
               <button onClick={handleDeckDelete} className="btn btn-danger">
+                <i className="oi oi-trash" style={{ paddingRight: "5px" }}></i>
                 Delete
               </button>
             </div>
